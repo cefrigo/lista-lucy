@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0C090F">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="img/icono-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/icono-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="img/icono-180.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lista de Lucy">
+<meta property="og:title" content="La lista de regalos de Lucy">
+<meta property="og:description" content="Elegí un regalo y queda reservado, para que nadie compre dos veces lo mismo.">
+<meta property="og:image" content="https://cefrigo.github.io/lista-lucy/img/compartir.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://cefrigo.github.io/lista-lucy/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La lista de regalos de Lucy">
+<meta name="twitter:description" content="Elegí un regalo y queda reservado, para que nadie compre dos veces lo mismo.">
+<meta name="twitter:image" content="https://cefrigo.github.io/lista-lucy/img/compartir.jpg">
+<title>Lista de Lucy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0C090F; --bg-2:#130E17; --card:#181220; --card-2:#1E1727;
+  --line:#2C2233; --line-2:#3A2D43;
+  --ink:#F2ECF2; --ink-2:#C3B6C8; --muted:#8B7E93;
+  --rose:#E4A7B4; --rose-dim:#B3798A; --gold:#C9A86A; --moss:#7E9A7A;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{max-width:100%;overflow-x:hidden}
+body{
+  margin:0; background:var(--bg); color:var(--ink-2);
+  font-family:'Inter',system-ui,-apple-system,sans-serif; font-size:15px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(1100px 620px at 50% -12%, rgba(228,167,180,.10), transparent 62%),
+    radial-gradient(760px 460px at 88% 8%, rgba(201,168,106,.06), transparent 60%);
+  background-attachment:fixed;
+}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',Georgia,serif;color:var(--ink);font-weight:400;line-height:1.15}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+a{color:var(--rose)}
+button{font-family:inherit}
+
+/* ── header ── */
+header.top{padding:64px 0 30px;text-align:center;position:relative}
+.moth{width:74px;height:74px;margin:0 auto 14px;display:block;opacity:.9}
+.kicker{font-size:10.5px;letter-spacing:.34em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+h1.name{font-size:clamp(62px,15vw,132px);letter-spacing:.02em;margin:0;color:var(--ink);
+  text-shadow:0 0 46px rgba(228,167,180,.24)}
+.sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;color:var(--rose);margin-top:2px}
+.rule{width:180px;height:1px;margin:26px auto;background:linear-gradient(90deg,transparent,var(--line-2),transparent);position:relative}
+.rule::after{content:"";position:absolute;left:50%;top:-2.5px;width:5px;height:5px;margin-left:-2.5px;
+  background:var(--gold);transform:rotate(45deg)}
+.intro{max-width:560px;margin:0 auto;font-size:14.5px;color:var(--ink-2)}
+.fecha{margin-top:12px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+
+/* ── progreso ── */
+.prog{max-width:430px;margin:34px auto 0}
+.prog-bar{height:3px;background:var(--line);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;width:0;background:linear-gradient(90deg,var(--rose-dim),var(--rose));
+  border-radius:99px;transition:width .8s cubic-bezier(.22,1,.36,1)}
+.prog-txt{margin-top:11px;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:center}
+
+/* ── grilla ── */
+main{padding:44px 0 70px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(258px,100%),1fr));gap:20px}
+.card{min-width:0;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;display:flex;flex-direction:column;position:relative;
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+.card:hover{transform:translateY(-3px);border-color:var(--line-2);box-shadow:0 16px 40px rgba(0,0,0,.5)}
+.card.taken{opacity:.55}
+.card.taken:hover{transform:none;box-shadow:none}
+.ph{aspect-ratio:1/1;background:var(--card-2);position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph .noimg{display:flex;flex-direction:column;align-items:center;gap:9px;color:var(--line-2);font-size:9.5px;letter-spacing:.18em;text-transform:uppercase}
+.ph .noimg svg{width:44px;height:44px;opacity:.5}
+/* estado del pie de tarjeta, para que todas midan igual */
+.taken-note{text-align:center;font-size:11.5px;letter-spacing:.09em;color:var(--muted);padding:11px 0;border-top:1px solid var(--line)}
+.card.taken .ph img{filter:grayscale(.85) brightness(.62)}
+.seal{position:absolute;inset:auto 0 0 0;background:linear-gradient(0deg,rgba(12,9,15,.96),rgba(12,9,15,.72) 60%,transparent);
+  padding:22px 14px 12px;text-align:center}
+.seal .knot{display:block;width:34px;height:10px;margin:0 auto 5px;color:var(--rose-dim)}
+.seal .who{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;
+  color:var(--rose);letter-spacing:.03em}
+.body{padding:15px 16px 16px;display:flex;flex-direction:column;flex:1;gap:9px}
+.title{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);line-height:1.22;
+  overflow-wrap:break-word;hyphens:auto}
+.nota{font-size:12.4px;color:var(--muted);overflow-wrap:break-word}
+.links{margin-top:auto;display:flex;gap:8px;align-items:center;padding-top:4px}
+.ver{font-size:11.4px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;
+  overflow-wrap:anywhere;
+  border-bottom:1px solid var(--line-2);padding-bottom:2px;transition:.18s}
+.ver:hover{color:var(--rose);border-color:var(--rose-dim)}
+.btn{border:0;border-radius:99px;padding:11px 15px;font-size:12.2px;font-weight:600;letter-spacing:.05em;
+  cursor:pointer;transition:.18s;white-space:normal;line-height:1.3;min-width:0}
+.btn-take{background:var(--rose);color:#1A1016;width:100%}
+.btn-take:hover{background:#EFBCC7;transform:translateY(-1px)}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line-2)}
+.btn-ghost:hover{color:var(--rose);border-color:var(--rose-dim)}
+.btn-mine{background:transparent;color:var(--moss);border:1px solid #35452F;width:100%}
+.btn-mine:hover{color:#A6C4A1;border-color:#4C6344}
+
+/* ── vacío / carga ── */
+.empty{text-align:center;padding:72px 20px;color:var(--muted)}
+.empty .big{font-family:'Cormorant Garamond',serif;font-size:27px;color:var(--ink-2);margin-bottom:8px}
+
+/* ── modal ── */
+.veil{position:fixed;inset:0;background:rgba(6,4,8,.82);backdrop-filter:blur(7px);
+  display:none;align-items:center;justify-content:center;padding:22px;z-index:60}
+.veil.on{display:flex}
+.modal{background:var(--bg-2);border:1px solid var(--line-2);border-radius:20px;
+  padding:30px;max-width:430px;width:100%;box-shadow:0 30px 90px rgba(0,0,0,.72)}
+.modal.wide{max-width:640px}
+.modal h3{font-size:27px;margin:0 0 6px}
+.modal p.lead{font-size:13.6px;color:var(--muted);margin:0 0 20px}
+label{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+input,textarea{width:100%;background:#0E0A11;border:1px solid var(--line);border-radius:10px;
+  padding:12px 13px;color:var(--ink);font-family:inherit;font-size:14px;transition:.18s}
+input:focus,textarea:focus{outline:0;border-color:var(--rose-dim);box-shadow:0 0 0 3px rgba(228,167,180,.09)}
+textarea{resize:vertical;min-height:62px}
+.row{display:flex;gap:10px;margin-top:22px}
+.row .btn{flex:1;padding:13px}
+.hint{font-size:11.6px;color:var(--muted);margin-top:6px;line-height:1.5}
+.err{color:#E38A8A;font-size:12.6px;margin-top:12px;display:none}
+.err.on{display:block}
+
+/* ── admin ── */
+.adminbar{position:fixed;right:16px;bottom:16px;z-index:40}
+.adminbar button{background:var(--card);border:1px solid var(--line);color:var(--muted);
+  border-radius:99px;padding:10px 15px;font-size:11.5px;cursor:pointer;letter-spacing:.06em;transition:.18s}
+.adminbar button:hover{color:var(--rose);border-color:var(--rose-dim)}
+.adminlist{margin-top:20px;max-height:320px;overflow-y:auto;border-top:1px solid var(--line)}
+.arow{display:flex;gap:11px;align-items:center;padding:11px 2px;border-bottom:1px solid var(--line)}
+.arow img{width:42px;height:42px;border-radius:7px;object-fit:cover;background:var(--card-2);flex-shrink:0}
+.arow .t{flex:1;min-width:0}
+.arow .t b{display:block;color:var(--ink);font-weight:500;font-size:13.4px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.arow .t span{font-size:11.4px;color:var(--muted)}
+.arow button{background:none;border:0;color:var(--muted);cursor:pointer;font-size:11.5px;padding:5px 7px;border-radius:6px}
+.arow button:hover{color:#E38A8A;background:rgba(227,138,138,.09)}
+
+/* ── setup ── */
+.setup{max-width:660px;margin:64px auto;background:var(--bg-2);border:1px solid var(--line-2);
+  border-radius:20px;padding:36px}
+.setup h2{font-size:31px;margin:0 0 8px}
+.setup ol{padding-left:19px;color:var(--ink-2);font-size:14px;line-height:1.85}
+.setup code{background:#0E0A11;border:1px solid var(--line);border-radius:5px;padding:2px 6px;
+  font-size:12.4px;color:var(--rose);font-family:ui-monospace,Menlo,monospace}
+.setup .note{background:#0E0A11;border-left:2px solid var(--gold);padding:13px 15px;
+  border-radius:0 9px 9px 0;font-size:13px;margin-top:20px;color:var(--muted)}
+
+/* ── alias / colaborar ── */
+.alias{margin:64px auto 0;max-width:600px;text-align:center;padding:38px 30px 34px;
+  background:linear-gradient(180deg,rgba(30,23,39,.72),rgba(19,14,23,.5));
+  border:1px solid var(--line);border-radius:20px}
+.sprig{width:120px;height:26px;margin:0 auto 16px;display:block}
+.alias h2{font-size:clamp(25px,4.4vw,33px);margin:0 0 10px;color:var(--ink)}
+.alias p{font-size:14.6px;color:var(--ink-2);margin:0 auto;max-width:430px}
+.alias-box{display:inline-flex;align-items:center;gap:14px;margin:22px 0 4px;padding:11px 12px 11px 20px;
+  background:#0E0A11;border:1px solid var(--line-2);border-radius:99px;flex-wrap:wrap;justify-content:center}
+.alias-box span{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--gold);letter-spacing:.03em;
+  overflow-wrap:anywhere}
+.alias-box button{background:transparent;border:1px solid var(--line-2);color:var(--muted);
+  border-radius:99px;padding:8px 15px;font-size:11.4px;letter-spacing:.08em;cursor:pointer;transition:.18s}
+.alias-box button:hover{color:var(--gold);border-color:var(--gold)}
+.alias-box button.ok{color:var(--moss);border-color:#4C6344}
+.btn-mp{display:inline-flex;align-items:center;gap:10px;margin:20px 0 4px;padding:15px 26px;
+  background:linear-gradient(180deg,var(--rose),var(--rose-dim));color:#1A1016;text-decoration:none;
+  border-radius:99px;font-weight:650;font-size:14.5px;letter-spacing:.02em;
+  box-shadow:0 8px 26px rgba(228,167,180,.18);transition:.18s}
+.btn-mp:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(228,167,180,.26)}
+.btn-mp svg{width:19px;height:19px;flex-shrink:0}
+.alias-pie{font-size:12.2px;color:var(--muted);margin-top:9px}
+.alias .cierre{margin-top:26px;font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(18px,3vw,21px);line-height:1.5;color:var(--rose);max-width:420px;
+  text-shadow:0 0 34px rgba(228,167,180,.2)}
+@media(max-width:560px){.alias{padding:30px 20px 28px;margin-top:44px}}
+
+footer{padding:34px 0 46px;text-align:center;color:var(--muted);font-size:11.5px;
+  letter-spacing:.13em;text-transform:uppercase;border-top:1px solid var(--line)}
+.hidden{display:none!important}
+@media(max-width:700px){
+  .wrap{padding:0 15px}
+  header.top{padding:40px 0 20px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .title{font-size:16.5px}
+  .nota{font-size:11.6px}
+  .body{padding:12px 12px 13px;gap:7px}
+  .btn{padding:12px 10px;font-size:11.8px}
+  .ver{font-size:10.4px;letter-spacing:.06em}
+  .moth{width:60px;height:60px}
+  .intro{font-size:13.8px}
+  .seal .who{font-size:17px}
+  .seal{padding:18px 8px 10px}
+  .taken-note{font-size:10.8px;padding:12px 0}
+  .modal{padding:22px 18px;border-radius:16px}
+  .modal h3{font-size:23px}
+  .row{flex-direction:column-reverse;gap:8px}
+  .row .btn{width:100%}
+  .adminbar{right:12px;bottom:12px}
+  .adminlist{max-height:44vh}
+}
+@media(max-width:430px){
+  .grid{grid-template-columns:1fr;gap:14px}
+  .ph{aspect-ratio:4/3}
+  .title{font-size:19px}
+  .nota{font-size:12.4px}
+  .btn{padding:14px 16px;font-size:13px}
+}
+</style>
+</head>
+<body>
+<script src="config.js"></script>
+
+<!-- pantalla de configuración -->
+<div id="setup" class="setup hidden">
+  <h2>Falta configurar Firebase</h2>
+  <p class="lead" style="color:var(--muted);font-size:14px">Cinco minutos, una sola vez. Después no lo tocás más.</p>
+  <ol>
+    <li>Entrá a <code>console.firebase.google.com</code> y creá un proyecto (podés desactivar Analytics).</li>
+    <li>En el menú lateral: <b>Realtime Database</b> → <b>Crear base de datos</b> → elegí la región → arrancá en <b>modo de prueba</b>.</li>
+    <li>Volvé a <b>Configuración del proyecto</b> (el engranaje) → bajá hasta <b>Tus apps</b> → tocá el ícono <code>&lt;/&gt;</code> (Web) → registrá la app.</li>
+    <li>Firebase te muestra un bloque <code>firebaseConfig</code>. Copiá esos valores dentro de <code>config.js</code>, en la carpeta de esta página.</li>
+    <li>Asegurate de que <code>databaseURL</code> esté completo — es el que termina en <code>.firebasedatabase.app</code>. Si no aparece en el bloque, copialo de la pantalla de Realtime Database.</li>
+    <li>Recargá esta página.</li>
+  </ol>
+  <div class="note">
+    <b>Sobre el «modo de prueba»:</b> deja la base abierta para cualquiera que tenga el link.
+    Para una lista de baby shower entre familia está bien, pero tiene fecha de vencimiento (30 días)
+    y cualquiera con la URL podría escribir. Si querés que dure más, en la pestaña
+    <b>Reglas</b> de Realtime Database poné <code>{"rules":{".read":true,".write":true}}</code>.
+    Es igual de abierto, pero sin vencimiento.
+  </div>
+</div>
+
+<!-- app -->
+<div id="app" class="hidden">
+  <header class="top">
+    <div class="wrap">
+      <svg class="moth" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <g stroke="#E4A7B4" stroke-width="1.1" opacity=".92">
+          <path d="M50 34c-9-14-27-19-35-9-7 9 1 25 15 31 8 3 15 4 20 4" fill="rgba(228,167,180,.09)"/>
+          <path d="M50 34c9-14 27-19 35-9 7 9-1 25-15 31-8 3-15 4-20 4" fill="rgba(228,167,180,.09)"/>
+          <path d="M50 60c-6 8-16 12-22 7-5-5-1-14 7-18 5-2 11-3 15-3" fill="rgba(201,168,106,.09)"/>
+          <path d="M50 60c6 8 16 12 22 7 5-5 1-14-7-18-5-2-11-3-15-3" fill="rgba(201,168,106,.09)"/>
+          <path d="M50 30v42"/><circle cx="50" cy="28" r="3.4" fill="rgba(228,167,180,.22)"/>
+          <path d="M47 25c-3-5-7-7-10-7M53 25c3-5 7-7 10-7" stroke-linecap="round"/>
+        </g>
+      </svg>
+      <div class="kicker">Lista de regalos</div>
+      <h1 class="name" id="tName">Lucy</h1>
+      <div class="sub" id="tSub">Está en camino</div>
+      <div class="rule"></div>
+      <p class="intro" id="tIntro"></p>
+      <div class="fecha" id="tFecha"></div>
+      <div class="prog">
+        <div class="prog-bar"><div class="prog-fill" id="pf"></div></div>
+        <div class="prog-txt" id="pt">Cargando…</div>
+      </div>
+    </div>
+  </header>
+
+  <main><div class="wrap">
+    <div id="grid" class="grid"></div>
+    <div id="empty" class="empty hidden">
+      <div class="big">Todavía no hay regalos en la lista</div>
+      <div>Volvé en un rato.</div>
+    </div>
+
+    <section id="alias" class="alias hidden">
+      <svg class="sprig" viewBox="0 0 120 26" aria-hidden="true">
+        <g stroke="#C9A86A" stroke-width="1" fill="none" opacity=".55" stroke-linecap="round">
+          <path d="M8 13h40M72 13h40"/>
+          <path d="M60 5c-4 4-4 12 0 16 4-4 4-12 0-16z" fill="rgba(201,168,106,.14)"/>
+          <path d="M60 5v16"/>
+        </g>
+      </svg>
+      <h2 id="aTitulo"></h2>
+      <p id="aTexto"></p>
+      <a id="aLink" class="btn-mp hidden" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 11h18" stroke="currentColor" stroke-width="1.6"/></svg>
+        <span>Transferir por Mercado Pago</span>
+      </a>
+      <div class="alias-box">
+        <span id="aAlias"></span>
+        <button id="aCopy" type="button">Copiar</button>
+      </div>
+      <div class="alias-pie" id="aPie"></div>
+      <p class="cierre" id="aCierre"></p>
+    </section>
+  </div></main>
+
+  <footer><div class="wrap">Hecho con amor para Lucy</div></footer>
+</div>
+
+<div class="adminbar"><button id="adminBtn" type="button">Administrar</button></div>
+
+<!-- modal reservar -->
+<div class="veil" id="mTake"><div class="modal">
+  <h3>Lo llevo yo</h3>
+  <p class="lead" id="takeWhat"></p>
+  <label for="takeName">¿Cómo te llamás?</label>
+  <input id="takeName" type="text" maxlength="40" placeholder="Tu nombre" autocomplete="name">
+  <div class="hint">Solo lo ven los pap&aacute;s. Al resto le aparece que el regalo ya est&aacute; reservado, sin decir por qui&eacute;n.</div>
+  <div class="err" id="takeErr"></div>
+  <div class="row">
+    <button class="btn btn-ghost" data-close type="button">Cancelar</button>
+    <button class="btn btn-take" id="takeGo" type="button">Reservar</button>
+  </div>
+</div></div>
+
+<!-- modal clave admin -->
+<div class="veil" id="mKey"><div class="modal">
+  <h3>Panel</h3>
+  <p class="lead">Clave de administración.</p>
+  <input id="keyIn" type="password" placeholder="Clave" autocomplete="current-password">
+  <div class="err" id="keyErr">Clave incorrecta.</div>
+  <div class="row">
+    <button class="btn btn-ghost" data-close type="button">Cancelar</button>
+    <button class="btn btn-take" id="keyGo" type="button">Entrar</button>
+  </div>
+</div></div>
+
+<!-- modal admin -->
+<div class="veil" id="mAdmin"><div class="modal wide">
+  <h3>Regalos</h3>
+  <p class="lead">Pegá el link. El nombre se completa solo desde la URL — corregilo si hace falta.</p>
+  <label for="fUrl">Link del producto</label>
+  <input id="fUrl" type="url" placeholder="https://articulo.mercadolibre.com.ar/MLA-...">
+  <label for="fTitle">Nombre</label>
+  <input id="fTitle" type="text" maxlength="90" placeholder="Cuna colecho de madera">
+  <label for="fImg">Dirección de la imagen <span style="text-transform:none;letter-spacing:0">(opcional)</span></label>
+  <input id="fImg" type="url" placeholder="https://http2.mlstatic.com/...">
+  <div class="hint">En la página del producto: clic derecho sobre la foto → <b>Copiar dirección de la imagen</b> → pegala acá. Tiene que empezar con <b>https://</b> — una ruta de tu computadora (<code>file:///C:/…</code>) no la ve nadie más.</div>
+  <label for="fNote">Nota <span style="text-transform:none;letter-spacing:0">(opcional)</span></label>
+  <textarea id="fNote" maxlength="140" placeholder="Talle 0-3 meses, preferentemente en negro"></textarea>
+  <div class="err" id="admErr"></div>
+  <div class="row">
+    <button class="btn btn-ghost" data-close type="button">Cerrar</button>
+    <button class="btn btn-take" id="addGo" type="button">Agregar a la lista</button>
+  </div>
+  <div class="adminlist" id="admList"></div>
+</div></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, push, set, remove, runTransaction }
+  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const $ = s => document.querySelector(s);
+const cfg = window.LUCY_CONFIG || {};
+const T = window.LUCY_TEXTS || {};
+
+if (!cfg.databaseURL) { $("#setup").classList.remove("hidden"); throw new Error("sin config"); }
+$("#app").classList.remove("hidden");
+
+$("#tName").textContent  = T.nombre || "Lucy";
+$("#tSub").textContent   = T.bajada || "";
+$("#tIntro").textContent = T.intro || "";
+if (T.fecha) $("#tFecha").textContent = T.fecha;
+document.title = "Lista de " + (T.nombre || "Lucy");
+
+/* bloque de alias / colaborar */
+const AL = window.LUCY_ALIAS || {};
+if (AL.mostrar !== false && (AL.alias || AL.cierre)) {
+  $("#alias").classList.remove("hidden");
+  $("#aTitulo").textContent = AL.titulo || "";
+  $("#aTexto").textContent  = AL.texto || "";
+  $("#aCierre").textContent = AL.cierre || "";
+  if (AL.alias) { $("#aAlias").textContent = AL.alias; }
+  else { document.querySelector(".alias-box").classList.add("hidden"); }
+  /* si hay link de cobro de Mercado Pago, pasa a ser la accion principal */
+  if (AL.link) {
+    const a = $("#aLink");
+    a.href = AL.link;
+    a.classList.remove("hidden");
+    $("#aPie").textContent = AL.piePropio
+      || "Se abre Mercado Pago y elegís vos el monto. Si preferís transferir a mano, copiá el alias.";
+    document.querySelector(".alias-box").style.transform = "scale(.92)";
+    document.querySelector(".alias-box").style.opacity = ".85";
+  }
+  $("#aCopy").addEventListener("click", async () => {
+    const b = $("#aCopy");
+    try { await navigator.clipboard.writeText(AL.alias); }
+    catch (e) {
+      const r = document.createRange(); r.selectNode($("#aAlias"));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      try { document.execCommand("copy"); } catch (e2) {}
+      s.removeAllRanges();
+    }
+    b.textContent = "Copiado"; b.classList.add("ok");
+    setTimeout(() => { b.textContent = "Copiar"; b.classList.remove("ok"); }, 1900);
+  });
+}
+
+const db = getDatabase(initializeApp(cfg));
+const itemsRef = ref(db, "items");
+
+/* token local: permite cancelar la propia reserva sin tocar las ajenas */
+let me = null;
+try { me = localStorage.getItem("lucy-token");
+      if (!me) { me = Math.random().toString(36).slice(2) + Date.now().toString(36);
+                 localStorage.setItem("lucy-token", me); } }
+catch (e) { me = Math.random().toString(36).slice(2); }
+
+let items = {}, isAdmin = false;
+
+/* nombre a partir del slug de Mercado Libre u otra tienda */
+function titleFromUrl(u) {
+  try {
+    const path = decodeURIComponent(new URL(u).pathname);
+    let s = (path.split("/").filter(Boolean).pop() || "");
+    s = s.replace(/_JM$/i, "").replace(/^MLA-?\d+-?/i, "").replace(/\.(html?|php)$/i, "");
+    s = s.replace(/[-_+]+/g, " ").replace(/\s+/g, " ").trim();
+    if (s.length < 3) return "";
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  } catch (e) { return ""; }
+}
+
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g,
+  c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+
+const ORN = '<span class="noimg"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true"><circle cx="20" cy="17" r="9" stroke="currentColor" stroke-width="1"/><path d="M25 11a9 9 0 0 1-9 13 9 9 0 0 0 9-13z" fill="currentColor" opacity=".55"/><path d="M20 30v6M17 33h6" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>Sin foto</span>';
+
+function render() {
+  const list = Object.entries(items)
+    .map(([id, v]) => ({ id, ...v }))
+    .sort((a, b) => (a.creado || 0) - (b.creado || 0));
+
+  const grid = $("#grid");
+  $("#empty").classList.toggle("hidden", list.length > 0);
+
+  const total = list.length;
+  const taken = list.filter(i => i.reservadoPor).length;
+  $("#pf").style.width = total ? (taken / total * 100) + "%" : "0%";
+  $("#pt").textContent = total
+    ? (taken === total ? "Están todos elegidos — gracias" : taken + " de " + total + " ya reservados")
+    : "Lista vacía por ahora";
+
+  grid.innerHTML = list.map(i => {
+    const mine = i.reservadoToken && i.reservadoToken === me;
+    const img = i.imagen
+      ? '<img src="' + esc(i.imagen) + '" alt="" loading="lazy" referrerpolicy="no-referrer" '
+        + 'onerror="this.style.display=\'none\';this.parentNode.insertAdjacentHTML(\'beforeend\',\'<span class=&quot;noimg&quot;>Sin foto</span>\')">'
+      : ORN;
+    const seal = i.reservadoPor
+      ? '<div class="seal"><svg class="knot" viewBox="0 0 34 10" aria-hidden="true">'
+        + '<path d="M2 5h11M21 5h11" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>'
+        + '<path d="M17 1.4c-2.2 1.8-2.2 5.4 0 7.2 2.2-1.8 2.2-5.4 0-7.2z" fill="currentColor" opacity=".5"/>'
+        + '</svg><div class="who">' + (mine ? "Lo reservaste vos" : "Reservado") + "</div></div>"
+      : "";
+    const action = i.reservadoPor
+      ? (mine ? '<button class="btn btn-mine" data-free="' + i.id + '" type="button">Ya no puedo — liberar</button>'
+              : '<div class="taken-note">Ya tiene quien lo lleve</div>')
+      : '<button class="btn btn-take" data-take="' + i.id + '" type="button">Lo llevo yo</button>';
+    const ver = i.url
+      ? '<a class="ver" href="' + esc(i.url) + '" target="_blank" rel="noopener noreferrer">Ver producto</a>' : "";
+    return '<article class="card' + (i.reservadoPor ? " taken" : "") + '">'
+      + '<div class="ph">' + img + seal + "</div>"
+      + '<div class="body"><div class="title">' + esc(i.titulo || "Regalo") + "</div>"
+      + (i.nota ? '<div class="nota">' + esc(i.nota) + "</div>" : "")
+      + '<div class="links">' + ver + "</div>" + action + "</div></article>";
+  }).join("");
+
+  if (isAdmin) renderAdmin(list);
+}
+
+function renderAdmin(list) {
+  $("#admList").innerHTML = list.map(i =>
+    '<div class="arow">'
+    + (i.imagen ? '<img src="' + esc(i.imagen) + '" alt="" referrerpolicy="no-referrer">' : '<img alt="">')
+    + '<div class="t"><b>' + esc(i.titulo || "Regalo") + "</b><span>"
+    + (i.reservadoPor ? "Reservado por " + esc(i.reservadoPor) : "Disponible") + "</span></div>"
+    + (i.reservadoPor ? '<button data-adfree="' + i.id + '" type="button">Liberar</button>' : "")
+    + '<button data-del="' + i.id + '" type="button">Borrar</button></div>').join("");
+}
+
+onValue(itemsRef, snap => { items = snap.val() || {}; render(); },
+        err => { $("#pt").textContent = "No se pudo conectar con la base"; console.error(err); });
+
+/* ── modales ── */
+const open  = m => $(m).classList.add("on");
+const close = m => $(m).classList.remove("on");
+document.addEventListener("click", e => {
+  if (e.target.matches("[data-close]") || e.target.classList.contains("veil"))
+    document.querySelectorAll(".veil.on").forEach(v => v.classList.remove("on"));
+});
+
+/* ── reservar / liberar ── */
+let pending = null;
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-take]");
+  if (t) {
+    pending = t.getAttribute("data-take");
+    $("#takeWhat").textContent = items[pending] ? (items[pending].titulo || "") : "";
+    $("#takeErr").classList.remove("on");
+    try { $("#takeName").value = localStorage.getItem("lucy-nombre") || ""; } catch (err) {}
+    open("#mTake"); setTimeout(() => $("#takeName").focus(), 60);
+  }
+  const f = e.target.closest("[data-free]");
+  if (f) liberar(f.getAttribute("data-free"), false);
+});
+
+$("#takeName").addEventListener("keydown", e => { if (e.key === "Enter") $("#takeGo").click(); });
+
+$("#takeGo").addEventListener("click", async () => {
+  const nombre = $("#takeName").value.trim();
+  if (nombre.length < 2) {
+    $("#takeErr").textContent = "Escribí tu nombre para que sepamos quién lo lleva.";
+    $("#takeErr").classList.add("on"); return;
+  }
+  try { localStorage.setItem("lucy-nombre", nombre); } catch (err) {}
+  const id = pending;
+  $("#takeGo").disabled = true; $("#takeGo").textContent = "Reservando…";
+  try {
+    /* transacción: si alguien se adelantó, no lo pisa */
+    const res = await runTransaction(ref(db, "items/" + id), cur => {
+      if (!cur) return cur;
+      if (cur.reservadoPor) return;              // abortar: ya lo tomaron
+      cur.reservadoPor = nombre;
+      cur.reservadoToken = me;
+      cur.reservadoEn = Date.now();
+      return cur;
+    });
+    if (!res.committed) {
+      $("#takeErr").textContent = "Alguien lo reservó hace un segundo. Elegí otro.";
+      $("#takeErr").classList.add("on");
+    } else { close("#mTake"); }
+  } catch (err) {
+    $("#takeErr").textContent = "No se pudo guardar. Revisá la conexión.";
+    $("#takeErr").classList.add("on"); console.error(err);
+  }
+  $("#takeGo").disabled = false; $("#takeGo").textContent = "Reservar";
+});
+
+async function liberar(id, force) {
+  const it = items[id]; if (!it) return;
+  if (!force && it.reservadoToken !== me) return;
+  if (!confirm("¿Liberar «" + (it.titulo || "este regalo") + "» para que otro lo elija?")) return;
+  await runTransaction(ref(db, "items/" + id), cur => {
+    if (!cur) return cur;
+    cur.reservadoPor = null; cur.reservadoToken = null; cur.reservadoEn = null;
+    return cur;
+  });
+}
+
+/* ── admin ── */
+$("#adminBtn").addEventListener("click", () => {
+  if (isAdmin) { renderAdmin(Object.entries(items).map(([id, v]) => ({ id, ...v }))); open("#mAdmin"); }
+  else { $("#keyErr").classList.remove("on"); $("#keyIn").value = ""; open("#mKey");
+         setTimeout(() => $("#keyIn").focus(), 60); }
+});
+$("#keyIn").addEventListener("keydown", e => { if (e.key === "Enter") $("#keyGo").click(); });
+async function sha256hex(txt) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(txt));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+$("#keyGo").addEventListener("click", async () => {
+  const esperado = window.LUCY_ADMIN_HASH || "";
+  let ok = false;
+  try { ok = esperado && (await sha256hex($("#keyIn").value)) === esperado; }
+  catch (e) { ok = ($("#keyIn").value === window.LUCY_ADMIN_KEY); }   // http sin crypto.subtle
+  if (ok) {
+    isAdmin = true; close("#mKey"); render(); open("#mAdmin"); $("#adminBtn").textContent = "Regalos";
+  } else $("#keyErr").classList.add("on");
+});
+
+$("#fUrl").addEventListener("blur", () => {
+  if (!$("#fTitle").value.trim()) {
+    const g = titleFromUrl($("#fUrl").value.trim());
+    if (g) $("#fTitle").value = g;
+  }
+});
+
+$("#addGo").addEventListener("click", async () => {
+  const titulo = $("#fTitle").value.trim() || titleFromUrl($("#fUrl").value.trim());
+  if (!titulo) {
+    $("#admErr").textContent = "Poné al menos un nombre para el regalo.";
+    $("#admErr").classList.add("on"); return;
+  }
+  const img = $("#fImg").value.trim();
+  if (/^(file:|[a-zA-Z]:[\\/])/.test(img)) {
+    $("#admErr").textContent = "Esa es una ruta de tu computadora, y no la va a ver nadie más. "
+      + "Necesitás la dirección web de la imagen: clic derecho sobre la foto en la página del "
+      + "producto y «Copiar dirección de la imagen».";
+    $("#admErr").classList.add("on"); return;
+  }
+  if (img && !/^(https?:\/\/|img\/)/.test(img)) {
+    $("#admErr").textContent = "La imagen tiene que empezar con https:// (o ser un archivo de la carpeta img/).";
+    $("#admErr").classList.add("on"); return;
+  }
+  $("#admErr").classList.remove("on");
+  $("#addGo").disabled = true; $("#addGo").textContent = "Agregando…";
+  try {
+    await set(push(itemsRef), {
+      titulo,
+      url: $("#fUrl").value.trim() || null,
+      imagen: $("#fImg").value.trim() || null,
+      nota: $("#fNote").value.trim() || null,
+      creado: Date.now(),
+      reservadoPor: null, reservadoToken: null, reservadoEn: null
+    });
+    ["#fUrl", "#fTitle", "#fImg", "#fNote"].forEach(s => $(s).value = "");
+    $("#fUrl").focus();
+  } catch (err) {
+    $("#admErr").textContent = "No se pudo guardar. Revisá la conexión.";
+    $("#admErr").classList.add("on"); console.error(err);
+  }
+  $("#addGo").disabled = false; $("#addGo").textContent = "Agregar a la lista";
+});
+
+document.addEventListener("click", async e => {
+  const d = e.target.closest("[data-del]");
+  if (d && isAdmin) {
+    const id = d.getAttribute("data-del");
+    if (confirm("¿Borrar «" + ((items[id] || {}).titulo || "este regalo") + "» de la lista?"))
+      await remove(ref(db, "items/" + id));
+  }
+  const af = e.target.closest("[data-adfree]");
+  if (af && isAdmin) liberar(af.getAttribute("data-adfree"), true);
+});
+</script>
+</body>
+</html>
